@@ -1,5 +1,5 @@
 # Equivalence Study 2021
-The equivalence study relies on selfplay_parameter_study experiment type files in pbs_scripts/, run_exp, and run_obs/
+The equivalence study relies on selfplay_parameter_study experiment type files in run_exp/ and run_obs/
 Files in those locations for running alternative experiment types (e.g., tournament, selfplay) have been removed.
 __USER__ and __USER_EMAIL__ system identifiers have been de-identified. .Rmd file maintains author.
 
