@@ -1,0 +1,292 @@
+{
+	"default_strategy_parameters" : {
+		"allc" : {
+			"memory_depth"	: 0,
+			"has_state"		: false
+		},	
+		"alld" : {
+			"memory_depth"	: 0,
+			"has_state"		: false
+			
+		},
+		"bully_naive" : {
+			"memory_depth"	: 1, 
+			"has_state"		: false
+		},
+		"random" : {
+			"memory_depth"	: 0, 
+			"has_state"		: false
+		},
+		"tft" : {
+			"memory_depth" 	: 1, 
+			"has_state"		: false
+		},
+		"actor_critic_1ed" : {
+			"memory_depth"		: 1, 
+			"has_state"			: true, 
+			"initial_action"	: 0.5,
+			"alpha"				: 0.8,
+			"beta"				: 0.9,
+			"gamma"				: 0.9,
+			"temperature"		: 1,			
+			"notes"				: "S&B do not use temperature for this algorithm"
+		},                      
+		"actor_critic_1ed_eligibility_traces" : {
+			"memory_depth"		: 1,
+			"has_state"			: true,			
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.8, 
+			"gamma"				: 0.9, 
+			"beta"				: 0.9, 
+			"critic_lambda"		: 0.9,
+			"actor_lambda"		: 0.9,
+			"temperature"		: 1,
+			"notes"				: "S&B do not use temperature for this algorithm"
+		},        
+		"actor_critic_1ed_replacetrace" : {
+			"memory_depth"		: 1,	
+			"has_state"			: true,			
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.4, 
+			"gamma"				: 0.9, 
+			"beta"				: 0.9, 
+			"critic_lambda"		: 0.9,
+			"actor_lambda"		: 0.9,
+			"temperature"		: 1,			
+			"notes"				: "S&B do not use temperature for this algorithm; initial values for V, actor trace?"
+		},              
+		"bandit_inc_softmax_ap_2ed" : {
+			"memory_depth"		: 1,
+			"has_state"			: true,
+			"alpha"				: 0.1, 
+			"temperature"		: 10
+		},
+		"bandit_noninc_softmax_ap_2ed" : {
+			"memory_depth"		: 1,
+			"has_state"			: true,
+			"alpha"				: 0.1, 
+			"temperature"		: 10
+		},
+		"bandit_pursuit_sav" : {
+			"memory_depth"		: 1,
+			"has_state"			: true,
+			"beta"				: 0.1, 
+			"optimistic_0"		: 5, 
+			"optimistic_1"		: 5
+		},
+		"bandit_reinfcomp" : {
+			"memory_depth"		: 1,
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.1, 
+			"beta"				: 0.1, 
+			"ref_reward"		: 4,
+			"temperature"		: 1,
+			"notes"				: "S&B do not use temperature for this algorithm; ref_reward set to 4, as 5 will break ordinal"
+		},                                        
+		"bandit_sav_inc" : {
+			"memory_depth"		: 1,
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"epsilon"			: 0.1, 
+			"optimistic_0"		: 5, 
+			"optimistic_1"		: 5
+		},
+		"bandit_sav_inc_optimistic_greedy" : {
+			"memory_depth"		: 1,
+			"has_state"			: true,
+			"optimistic_0"		: 5, 
+			"optimistic_1"		: 5
+		},
+		"bandit_sav_inc_softmax" : {
+			"memory_depth"		: 1,
+			"has_state"			: true,
+			"temperature"		: 10
+		},
+		"bandit_sav_noninc" : {
+			"memory_depth"		: 1,
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"epsilon"			: 0.1
+		},
+		"bandit_sav_noninc_softmax" : {
+			"memory_depth"		: 1,
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"temperature"		: 10
+		},
+		"bandit_sl_direct" : {
+			"memory_depth"		: 1,
+			"has_state"			: true,
+			"initial_action"	: 0.5
+		},
+		"bandit_sl_la_lri" : {
+			"memory_depth"		: 1,
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.1
+		},
+		"bandit_sl_la_lrp" : {
+			"memory_depth"		: 1,
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.1
+		},
+		"bandit_wa" : {
+			"memory_depth"		: 1,
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.1, 
+			"epsilon"			: 0.1
+		},
+		"bandit_wa_optimistic_greedy" : {
+			"memory_depth"		: 1,
+			"has_state"			: true,			
+			"alpha"				: 0.1, 
+			"optimistic_0"		: 10, 
+			"optimistic_1"		: 10
+		},
+		"bandit_wa_softmax" : {
+			"memory_depth"		: 1, 
+			"has_state"			: true,
+			"alpha"				: 0.1, 
+			"temperature"		: 10, 
+			"optimistic_0"		: 5, 
+			"optimistic_1"		: 5
+		},
+		"bandit_wa_softmax_ap_2ed" : {
+			"memory_depth"		: 1, 
+			"has_state"			: true,
+			"alpha"				: 0.1, 
+			"temperature"		: 10
+		},
+		"bandit_wa_ucb" : {
+			"memory_depth"		: 1, 
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.1, 
+			"c"					: 1, 
+			"optimistic_0"		: 0, 
+			"optimistic_1"		: 0
+		},
+		"double_qlearning" : {
+			"memory_depth"		: 1, 
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.1, 
+			"gamma"				: 0.9, 
+			"epsilon"			: 0.1, 
+			"optimistic_0"		: 0, 
+			"optimistic_1"		: 0
+		},
+		"expected_sarsa" : {
+			"memory_depth"		: 1, 
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.1, 
+			"gamma"				: 0.9, 
+			"epsilon"			: 0.1, 
+			"optimistic_0"		: 0, 
+			"optimistic_1"		: 0
+		},
+		"fictitiousplay" :  {
+			"initial_action"	: 0.5,
+			"has_state"			: true
+		},
+		"qlearning" : {
+			"memory_depth"		: 1, 
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.1, 
+			"gamma"				: 0.9, 
+			"epsilon"			: 0.1, 
+			"optimistic_0"		: 0, 
+			"optimistic_1"		: 0
+		},
+		"rlearning" : {
+			"memory_depth"		: 1, 
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.1, 
+			"beta"				: 0.1, 
+			"epsilon"			: 0.1, 
+			"optimistic_0"		: 0, 
+			"optimistic_1"		: 0
+		},
+		"sarsa" : {
+			"memory_depth"		: 1, 
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.1, 
+			"gamma"				: 0.9, 
+			"epsilon"			: 0.1, 
+			"optimistic_0"		: 0, 
+			"optimistic_1"		: 0
+		},
+		"sarsa_lambda" : {
+			"memory_depth"		: 1, 
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.1, 
+			"gamma"				: 0.9, 
+			"epsilon"			: 0.1, 
+			"lambda"			: 0.9, 
+			"optimistic_0"		: 0, 
+			"optimistic_1"		: 0, 
+			"notes"				: "initial values for traces?"
+		},                     
+		"sarsa_lambda_replacetrace" : {
+			"memory_depth"		: 1, 
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.1,
+			"gamma"				: 0.9, 
+			"epsilon"			: 0.1, 
+			"lambda"			: 0.9, 
+			"optimistic_0"		: 0, 
+			"optimistic_1"		: 0
+		},
+		"watkins_naive_q_lambda" : {
+			"memory_depth"		: 1, 
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.2, 
+			"gamma"				: 0.1, 
+			"epsilon"			: 0.1, 
+			"lambda"			: 0.9, 
+			"optimistic_0"		: 0, 
+			"optimistic_1"		: 0
+		},
+		"watkins_naive_q_lambda_replacetrace" : {
+			"memory_depth"		: 1, 
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.1, 
+			"gamma"				: 0.9, 
+			"epsilon"			: 0.1, 
+			"lambda"			: 0.9, 
+			"optimistic_0"		: 0, 
+			"optimistic_1"		: 0
+		},
+		"watkins_q_lambda" : {
+			"memory_depth"		: 1, 
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.1, 
+			"gamma"				: 0.9, 
+			"epsilon"			: 0.1, 
+			"lambda"			: 0.9, 
+			"optimistic_0"		: 0, 
+			"optimistic_1"		: 0
+		},
+		"watkins_q_lfa" : {
+			"memory_depth"		: 1, 
+			"has_state"			: true,
+			"initial_action"	: 0.5, 
+			"alpha"				: 0.2, 
+			"gamma"				: 0.9, 
+			"epsilon"			: 0.1
+		}
+	}
+	
+}

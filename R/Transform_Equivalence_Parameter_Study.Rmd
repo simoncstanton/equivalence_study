@@ -1,0 +1,692 @@
+---
+title: "Transform Equivalence - Parameter Study Compare Representations; exp addendum gamma-free, Study 4"
+subtitle: "Watkins Q, Linear Function Approximation"
+author: Simon C Stanton
+date: "`r format(Sys.time(), '%d %B %Y')`"
+params:
+  algorithm: watkins_q_lfa
+  algorithm_displayname: "Watkins Q, Linear Function Approximation"
+  exp_id_transform_one: 129758
+  exp_id_transform_two: 133215 
+  transform_one: "ordinal"
+  transform_two: "ordinal_norm.3"
+output:
+  pdf_document: default
+  html_document: default
+knit: (function(inputFile, encoding) { 
+        rmarkdown::render(inputFile, 
+                          encoding = encoding, 
+                          output_file = paste(file.path(dirname(inputFile), "pdfs/", "compare_transforms__parameter_study__EXP_ADDENDUM_S4__watkins_q_lfa__ordinal_ordinal_norm3-test.pdf")))
+      })
+---
+\newpage
+
+```{r, setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#rmarkdown::render('Parameter_Study_Compare_Representation.Rmd', output_file = paste('report.', Sys.Date(), '.pdf', sep=''))
+
+library(ggplot2)
+library(car)
+library(ggpubr)
+
+
+```
+
+```{r, import-data, echo=FALSE, include=FALSE}
+path_to_data = "C:/Users/__USER__/Desktop/kunanyi/results/observations/selfplay_parameter_study/"
+view_path = "/view/ep_o/view_"
+file_suffix_pre = "_ep_o_table_parameter_study_"
+file_suffix_post = "_series.csv"
+
+exp_id_transform_one <- params$exp_id_transform_one 
+exp_id_transform_two <- params$exp_id_transform_two
+
+transform_one <- params$transform_one
+transform_two <- params$transform_two
+
+strategy <- params$algorithm_displayname 
+strategy_filename <- params$algorithm 
+
+
+# transform_one
+
+## CC Series
+filename = paste(path_to_data, exp_id_transform_one, view_path, exp_id_transform_one, file_suffix_pre, "cc", file_suffix_post, sep="")
+df_transform_one_set_cc <- read.csv(file= filename, header=TRUE)
+
+## CD Series
+filename = paste(path_to_data, exp_id_transform_one, view_path, exp_id_transform_one, file_suffix_pre, "cd", file_suffix_post, sep="")
+df_transform_one_set_cd <- read.csv(file= filename, header=TRUE)
+
+## DC Series
+filename = paste(path_to_data, exp_id_transform_one, view_path, exp_id_transform_one, file_suffix_pre, "dc", file_suffix_post, sep="")
+df_transform_one_set_dc <- read.csv(file= filename, header=TRUE)
+
+## DD Series
+filename = paste(path_to_data, exp_id_transform_one, view_path, exp_id_transform_one, file_suffix_pre, "dd", file_suffix_post, sep="")
+df_transform_one_set_dd <- read.csv(file= filename, header=TRUE)
+
+# Ordinal 
+
+## CC Series
+filename = paste(path_to_data, exp_id_transform_two, view_path, exp_id_transform_two, file_suffix_pre, "cc", file_suffix_post, sep="")
+df_transform_two_set_cc <- read.csv(file= filename, header=TRUE)
+
+## CD Series
+filename = paste(path_to_data, exp_id_transform_two, view_path, exp_id_transform_two, file_suffix_pre, "cd", file_suffix_post, sep="")
+df_transform_two_set_cd <- read.csv(file= filename, header=TRUE)
+
+## DC Series
+filename = paste(path_to_data, exp_id_transform_two, view_path, exp_id_transform_two, file_suffix_pre, "dc", file_suffix_post, sep="")
+df_transform_two_set_dc <- read.csv(file= filename, header=TRUE)
+
+## DD Series
+filename = paste(path_to_data, exp_id_transform_two, view_path, exp_id_transform_two, file_suffix_pre, "dd", file_suffix_post, sep="")
+df_transform_two_set_dd <- read.csv(file= filename, header=TRUE)
+
+
+
+df_combined_transforms <- data.frame(
+    Index <- c(seq.int(400), seq.int(400)),
+    Representation = factor(c(rep(paste(transform_one), 400), rep(paste(transform_two), 400))),
+    Outcome = factor(c(rep("CC", 100), rep("CD", 100), rep("DC", 100), rep("DD", 100), rep("CC", 100), rep("CD", 100), rep("DC", 100), rep("DD", 100))),
+    Proportion = c(df_transform_one_set_cc$CC, df_transform_one_set_cd$CD, df_transform_one_set_dc$DC, df_transform_one_set_dd$DD,  df_transform_two_set_cc$CC, df_transform_two_set_cd$CD, df_transform_two_set_dc$DC, df_transform_two_set_dd$DD)
+)
+
+# swaps order of transforms in boxplot by using levels() - factor() is by default alphabetical
+df_combined_transforms$Representation <- factor(df_combined_transforms$Representation, levels=c(paste(transform_one), paste(transform_two)))
+
+
+```
+
+# Visualise Data 
+
+## Grouped Boxplot
+
+```{r, echo=FALSE}
+ggplot(df_combined_transforms, aes(x=Representation, y=Proportion, fill=Outcome)) + 
+  geom_boxplot() + 
+  coord_cartesian(ylim = c(0, 1)) + 
+  theme_bw() + 
+  scale_color_grey() + 
+  scale_fill_brewer(palette="Blues") + 
+  #annotate("text", x = Inf, y = -0.01, label = paste("exp_", exp_id_transform_one, " x ","exp_", exp_id_transform_two, sep=""), hjust=2.5, vjust=0.8, col="black", cex=3, alpha = 0.3) +
+  labs(title = paste(strategy, "Paired Parameter Study", sep=" "),
+        subtitle = paste("Distribution of ", transform_one, " & ", transform_two, " outcomes. Exp IDs: ", exp_id_transform_one, ", ", exp_id_transform_two, sep="")) +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12),    # Center title position and size
+    plot.subtitle = element_text(hjust = 0.5, size=10),            # Center subtitle
+    plot.caption = element_text(hjust = 0, face = "italic") # move caption to the left
+  ) 
+
+# #caption = "Distribution of scalar and ordinal outcomes in Prisoner's Dilemma parameter study across scalar\nand ordinal representation.") +
+# Outcomes are labelled as CC (Mutual Cooperation), CD (Cooperate/Defect),\nDC (Defect/Cooperate), DD (Mutual Defection). Each experiment comprised 500 episodes of 1000 timesteps each.\nProportion, or frequency of an outcome is the average of each parameter pairing of $\alpha, \beta over range (0.1, 1.0)
+
+ggsave(path="plots", filename=paste("compare_transforms_", strategy_filename, "_", exp_id_transform_one, "_", exp_id_transform_two, "_grouped_boxplot-test.png", sep=""), width=8, height=6, dpi=300) 
+  
+```
+
+## Facet Boxplot with paired lines
+
+```{r, echo=FALSE}
+
+ggplot(df_combined_transforms, aes(x = Representation, y = Proportion)) +
+    geom_boxplot(aes(fill = Representation)) +
+    geom_point(aes(col = Representation, group=Index), size = 0.3, stroke = 0, shape = 16) +
+    geom_line(aes(group = Index),alpha = 0.2, col = "grey", size = 0.3) +
+    facet_wrap(df_combined_transforms$Outcome) +
+  coord_cartesian(ylim = c(0, 1))  +
+  stat_compare_means(paired=TRUE, label.x = 1.35, label.y = 0.9) +
+    #labs(title = paste(strategy, "Paired Parameter Study", sep=" "),
+  labs(title = paste(strategy, "Paired Treatment", sep=" "),
+        subtitle = paste("Distribution of ", transform_one, " & ", transform_two, " outcomes. [Exp IDs: ", exp_id_transform_one, ", ", exp_id_transform_two, "]", sep="")) +
+  theme_minimal() +
+  scale_fill_brewer(palette="Blues") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12),    # Center title position and size
+    plot.subtitle = element_text(hjust = 0.5, size=10),            # Center subtitle
+    plot.caption = element_text(hjust = 0, face = "italic") # move caption to the left
+  ) +
+  rremove("legend")
+
+ggsave(path="plots", filename=paste("compare_transforms_", strategy_filename, "_", exp_id_transform_one, "_", exp_id_transform_two, "_facet_boxplot_paired_lines-test.png", sep=""), width=8, height=6, dpi=300, bg='white')
+```
+
+\newpage
+
+# Test equality of variance within transform group, by outcome: H_0 variances are equal
+## Transform One: `r transform_one` (Proportion ~ Outcome)
+
+```{r, echo=FALSE}
+
+# Test equality of variances: H_0 variances are equal
+leveneTest(Proportion ~ Outcome, data=subset(df_combined_transforms, df_combined_transforms$Representation==paste(transform_one)))
+
+```
+
+## Transform Two: `r transform_two` (Proportion ~ Outcome)
+
+```{r, echo=FALSE}
+leveneTest(Proportion ~ Outcome, data=subset(df_combined_transforms, df_combined_transforms$Representation==paste(transform_two)))
+
+```
+
+\newpage
+
+# Tests for Normal Distribution
+
+## All Outcomes Aggregated
+
+### `r transform_one`
+
+```{r, echo=FALSE}
+
+# All Outcomes squished to one vector
+
+df_all_outcomes_transform_one <- subset(df_combined_transforms, df_combined_transforms$Representation==paste(transform_one))
+
+boxplot(df_all_outcomes_transform_one$Proportion)
+
+hist(df_all_outcomes_transform_one$Proportion)
+plot(density(df_all_outcomes_transform_one$Proportion))
+
+#qqPlot(df_all_outcomes_transform_one$Proportion)
+ggqqplot(df_all_outcomes_transform_one$Proportion)
+
+shapiro.test(df_all_outcomes_transform_one$Proportion)
+
+```
+
+### `r transform_two`
+
+```{r, echo=FALSE}
+
+# All Outcomes squished to one vector
+
+df_all_outcomes_transform_two <- subset(df_combined_transforms, df_combined_transforms$Representation==paste(transform_two))
+
+boxplot(df_all_outcomes_transform_two$Proportion)
+
+hist(df_all_outcomes_transform_two$Proportion)
+plot(density(df_all_outcomes_transform_two$Proportion))
+
+#qqPlot(df_all_outcomes_transform_two$Proportion)
+ggqqplot(df_all_outcomes_transform_two$Proportion)
+
+shapiro.test(df_all_outcomes_transform_two$Proportion)
+
+```
+
+## Outcomes Disaggregated
+
+### CC `r transform_one`
+(Ignore histogram, plot titles etc, 'transform_one' etc are variables names, have not set titles)
+
+```{r, echo=FALSE}
+
+df_transform_one_cc <- subset(df_combined_transforms, df_combined_transforms$Representation==paste(transform_one) & df_combined_transforms$Outcome=="CC")
+
+boxplot(df_transform_one_cc$Proportion)
+hist(df_transform_one_cc$Proportion)
+plot(density(df_transform_one_cc$Proportion))
+
+#qqPlot(df_transform_one_cc$Proportion)
+ggqqplot(df_transform_one_cc$Proportion)
+
+shapiro.test(df_transform_one_cc$Proportion)
+
+```
+
+### CC `r transform_two`
+
+```{r, echo=FALSE}
+
+
+df_transform_two_cc <- subset(df_combined_transforms, df_combined_transforms$Representation==paste(transform_two) & df_combined_transforms$Outcome=="CC")
+
+boxplot(df_transform_two_cc$Proportion)
+hist(df_transform_two_cc$Proportion)
+plot(density(df_transform_two_cc$Proportion))
+
+#qqPlot(df_transform_two_cc$Proportion)
+ggqqplot(df_transform_two_cc$Proportion)
+
+shapiro.test(df_transform_two_cc$Proportion)
+
+
+# Plot and test
+```
+
+
+### CD `r transform_one`
+
+```{r, echo=FALSE}
+
+
+df_transform_one_cd <- subset(df_combined_transforms, df_combined_transforms$Representation==paste(transform_one) & df_combined_transforms$Outcome=="CD")
+
+boxplot(df_transform_one_cd$Proportion)
+hist(df_transform_one_cd$Proportion)
+plot(density(df_transform_one_cd$Proportion))
+
+#qqPlot(df_transform_one_cd$Proportion)
+ggqqplot(df_transform_one_cd$Proportion)
+
+shapiro.test(df_transform_one_cd$Proportion)
+
+
+```
+
+### CD `r transform_two`
+
+```{r, echo=FALSE}
+
+df_transform_two_cd <- subset(df_combined_transforms, df_combined_transforms$Representation==paste(transform_two) & df_combined_transforms$Outcome=="CD")
+
+boxplot(df_transform_two_cd$Proportion)
+hist(df_transform_two_cd$Proportion)
+plot(density(df_transform_two_cd$Proportion))
+
+#qqPlot(df_transform_two_cd$Proportion)
+ggqqplot(df_transform_two_cd$Proportion)
+
+shapiro.test(df_transform_two_cd$Proportion)
+
+
+# Plot and test
+```
+
+
+### DC `r transform_one`
+
+```{r, echo=FALSE}
+
+
+df_transform_one_dc <- subset(df_combined_transforms, df_combined_transforms$Representation==paste(transform_one) & df_combined_transforms$Outcome=="DC")
+
+boxplot(df_transform_one_dc$Proportion)
+hist(df_transform_one_dc$Proportion)
+plot(density(df_transform_one_dc$Proportion))
+
+#qqPlot(df_transform_one_dc$Proportion)
+ggqqplot(df_transform_one_dc$Proportion)
+
+shapiro.test(df_transform_one_dc$Proportion)
+```
+
+### DC `r transform_two`
+
+```{r, echo=FALSE}
+
+
+df_transform_two_dc <- subset(df_combined_transforms, df_combined_transforms$Representation==paste(transform_two) & df_combined_transforms$Outcome=="DC")
+
+boxplot(df_transform_two_dc$Proportion)
+hist(df_transform_two_dc$Proportion)
+plot(density(df_transform_two_dc$Proportion))
+
+#qqPlot(df_transform_two_dc$Proportion)
+ggqqplot(df_transform_two_dc$Proportion)
+
+shapiro.test(df_transform_two_dc$Proportion)
+
+
+```
+
+
+
+### DD `r transform_one`
+
+```{r, echo=FALSE}
+
+
+df_transform_one_dd <- subset(df_combined_transforms, df_combined_transforms$Representation==paste(transform_one) & df_combined_transforms$Outcome=="DD")
+
+boxplot(df_transform_one_dd$Proportion)
+hist(df_transform_one_dd$Proportion)
+plot(density(df_transform_one_dd$Proportion))
+
+#qqPlot(df_transform_one_dd$Proportion)
+ggqqplot(df_transform_one_dd$Proportion)
+
+shapiro.test(df_transform_one_dd$Proportion)
+
+```
+
+### DD `r transform_two`
+
+```{r, echo=FALSE}
+
+
+df_transform_two_dd <- subset(df_combined_transforms, df_combined_transforms$Representation==paste(transform_two) & df_combined_transforms$Outcome=="DD")
+
+boxplot(df_transform_two_dd$Proportion)
+hist(df_transform_two_dd$Proportion)
+plot(density(df_transform_two_dd$Proportion))
+
+#qqPlot(df_transform_two_dd$Proportion)
+ggqqplot(df_transform_two_dd$Proportion)
+
+shapiro.test(df_transform_two_dd$Proportion)
+
+```
+
+
+
+\newpage
+
+
+# Tests for equivalence
+
+## All Outcomes Aggregated
+Wilcoxon test (paired difference test) for non-normal distributions. 
+H_0: samples are drawn from populations with equivalent mean ranks.
+
+### Boxplot
+
+```{r, echo=FALSE}
+# Plot and test
+
+ggplot(df_combined_transforms, aes(x=Representation, y=Proportion)) + geom_boxplot() + coord_cartesian(ylim = c(0, 1)) + theme_bw()
+
+```
+
+### Wilcoxon
+
+```{r, echo=FALSE}
+wilcox.test(df_all_outcomes_transform_one$Proportion, df_all_outcomes_transform_two$Proportion, paired = TRUE, alternative = "two.sided", conf.int = TRUE, exact=FALSE)
+
+```
+### Aggregated outcomes by representation - boxplot with paired lines
+
+```{r, echo=FALSE}
+
+ggplot(df_combined_transforms, aes(x = Representation, y = Proportion)) +
+    geom_boxplot(aes(fill = Representation)) +
+    geom_point(aes(col = Representation), size = 0.1, stroke = 0, shape = 16) +
+    geom_line(aes(group = Index),alpha = 0.2, col = "grey") +
+  coord_cartesian(ylim = c(0, 1))  +
+  stat_compare_means(paired=TRUE, label.x = 1.35, label.y = 0.95) +
+    labs(title = paste(strategy, "Paired Parameter Study", sep=" "),
+        subtitle = paste("Distribution of Aggregated ", transform_one, " & ", transform_two, " Outcomes. [Exp IDs: ", exp_id_transform_one, ", ", exp_id_transform_two, "]", sep="")) +
+  theme_minimal() +
+  scale_fill_brewer(palette="Blues") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12),    # Center title position and size
+    plot.subtitle = element_text(hjust = 0.5, size=10),            # Center subtitle
+    plot.caption = element_text(hjust = 0, face = "italic") # move caption to the left
+  ) +
+  rremove("legend")
+
+ggsave(path="plots", filename=paste("compare_transforms_", strategy_filename, "_", exp_id_transform_one, "_", exp_id_transform_two, "_aggregated_outcomes_boxplot_paired_lines-test.png", sep=""), width=8, height=6, dpi=300)
+
+```
+
+
+
+## All Outcomes Disaggregated
+
+
+### Boxplot `r transform_one`
+
+```{r, echo=FALSE}
+
+ggplot(df_all_outcomes_transform_one, aes(x=Outcome, y=Proportion)) + geom_boxplot() + geom_jitter(alpha = 0.15, width = 0.3) + coord_cartesian(ylim = c(0, 1)) + theme_bw() 
+
+```
+
+### Boxplot `r transform_two`
+
+```{r, echo=FALSE}
+
+ggplot(df_all_outcomes_transform_two, aes(x=Outcome, y=Proportion)) + geom_boxplot() + geom_jitter(alpha = 0.15, width = 0.3) + coord_cartesian(ylim = c(0, 1)) + theme_bw() 
+
+```
+
+
+
+\newpage
+
+
+# Tests for equivalence, by paired Outcomes
+
+## CC pairwise (`r transform_one` ~ `r transform_two`)
+
+### Boxplot with Scatter points, Wilcoxon p-value annotation
+
+```{r, echo=FALSE}
+
+df_combined_cc <- data.frame(
+    Index = c(seq.int(100), seq.int(100)),
+    Representation = factor(c(rep(paste(transform_one), 100), rep(paste(transform_two), 100))),
+    Outcome = factor(c(rep("CC", 200))),
+    Proportion = c(df_transform_one_cc$Proportion, df_transform_two_cc$Proportion)
+)
+
+# re-level to change from default alphabetical ordering
+df_combined_cc$Representation <- factor(df_combined_cc$Representation, levels=c(paste(transform_one), paste(transform_two))) 
+
+cc_plot <- ggplot(df_combined_cc, aes(x=Representation, y=Proportion)) + 
+  geom_boxplot() + 
+  geom_jitter(alpha = 0.15, width = 0.3) + 
+  coord_cartesian(ylim = c(0, 1)) + 
+  theme_bw() + 
+  labs(x="CC") + 
+  stat_compare_means(paired=TRUE, label.x = 1.35, label.y = 0.5)
+cc_plot
+
+```
+
+### Wilcoxon 
+
+```{r, echo=FALSE}
+
+wilcox.test(df_transform_one_cc$Proportion, df_transform_two_cc$Proportion, paired = TRUE, alternative = "two.sided", conf.int = TRUE, exact=FALSE)
+
+```
+
+### Boxplot with Paired Lines 
+
+```{r, echo=FALSE}
+
+ggplot(df_combined_cc, aes(x = Representation, y = Proportion)) +
+    geom_boxplot(aes(fill = Representation)) +
+        geom_point(aes(col = Representation), size = 0.1, stroke = 0, shape = 16) +
+    geom_line(aes(group = Index), alpha = 0.2, col = "grey") +
+  coord_cartesian(ylim = c(0, 1))  +
+  stat_compare_means(paired=TRUE, label.x = 1.35, label.y = 0.95) +
+    labs(title = paste(strategy, "Paired Parameter Study", sep=" "),
+        subtitle = paste("Distribution of ", transform_one, " & ", transform_two, " CC Outcomes. [Exp IDs: ", exp_id_transform_one, ", ", exp_id_transform_two, "]", sep="")) +
+  theme_minimal() +
+  scale_fill_brewer(palette="Blues") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12),    # Center title position and size
+    plot.subtitle = element_text(hjust = 0.5, size=10),            # Center subtitle
+    plot.caption = element_text(hjust = 0, face = "italic") # move caption to the left
+  ) +
+  rremove("legend")
+
+ggsave(path="plots", filename=paste("compare_transforms_", strategy_filename, "_", exp_id_transform_one, "_", exp_id_transform_two, "_CC_pairwise_boxplot_paired_lines-test.png", sep=""), width=8, height=6, dpi=300)
+
+```
+
+
+
+## CD pairwise (`r transform_one` ~ `r transform_two`)
+
+### Boxplot with Scatter points, Wilcoxon p-value annotation
+
+```{r, echo=FALSE}
+
+df_combined_cd <- data.frame(
+    Index = c(seq.int(100), seq.int(100)),
+    Representation = factor(c(rep(paste(transform_one), 100), rep(paste(transform_two), 100))),
+    Outcome = factor(c(rep("CD", 200))),
+    Proportion = c(df_transform_one_cd$Proportion, df_transform_two_cd$Proportion)
+)
+
+# re-level to change from default alphabetical ordering
+df_combined_cd$Representation <- factor(df_combined_cd$Representation, levels=c(paste(transform_one), paste(transform_two))) 
+
+cd_plot <- ggplot(df_combined_cd, aes(x=Representation, y=Proportion)) + 
+  geom_boxplot() + 
+  geom_jitter(alpha = 0.15, width = 0.3) + 
+  coord_cartesian(ylim = c(0, 1)) + 
+  theme_bw() + 
+  labs(x="CD") + 
+  stat_compare_means(paired=TRUE, label.x = 1.35, label.y = 0.5)
+cd_plot
+```
+
+### Wilcoxon 
+
+```{r, echo=FALSE}
+
+wilcox.test(df_transform_one_cd$Proportion, df_transform_two_cd$Proportion, paired = TRUE, alternative = "two.sided", conf.int = TRUE, exact=FALSE)
+
+```
+
+### Boxplot with Paired Lines 
+
+```{r, echo=FALSE}
+
+ggplot(df_combined_cd, aes(x = Representation, y = Proportion)) +
+    geom_boxplot(aes(fill = Representation)) +
+        geom_point(aes(col = Representation), size = 0.1, stroke = 0, shape = 16) +
+    geom_line(aes(group = Index), alpha = 0.2, col = "grey") +
+  coord_cartesian(ylim = c(0, 1))  +
+  stat_compare_means(paired=TRUE, label.x = 1.35, label.y = 0.95) +
+    labs(title = paste(strategy, "Paired Parameter Study", sep=" "),
+        subtitle = paste("Distribution of ", transform_one, " & ", transform_two, " CD Outcomes. [Exp IDs: ", exp_id_transform_one, ", ", exp_id_transform_two, "]", sep="")) +
+  theme_minimal() +
+  scale_fill_brewer(palette="Blues") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12),    # Center title position and size
+    plot.subtitle = element_text(hjust = 0.5, size=10),            # Center subtitle
+    plot.caption = element_text(hjust = 0, face = "italic") # move caption to the left
+  ) +
+  rremove("legend")
+
+ggsave(path="plots", filename=paste("compare_transforms_", strategy_filename, "_", exp_id_transform_one, "_", exp_id_transform_two, "_CD_pairwise_boxplot_paired_lines-test.png", sep=""), width=8, height=6, dpi=300)
+
+```
+
+
+
+## DC pairwise (`r transform_one` ~ `r transform_two`)
+
+### Boxplot with Scatter points, Wilcoxon p-value annotation
+
+```{r, echo=FALSE}
+
+df_combined_dc <- data.frame(
+    Index = c(seq.int(100), seq.int(100)),
+    Representation = factor(c(rep(paste(transform_one), 100), rep(paste(transform_two), 100))),
+    Outcome = factor(c(rep("DC", 200))),
+    Proportion = c(df_transform_one_dc$Proportion, df_transform_two_dc$Proportion)
+)
+
+# re-level to change from default alphabetical ordering
+df_combined_dc$Representation <- factor(df_combined_dc$Representation, levels=c(paste(transform_one), paste(transform_two))) 
+
+dc_plot <- ggplot(df_combined_dc, aes(x=Representation, y=Proportion)) + 
+  geom_boxplot() + 
+  geom_jitter(alpha = 0.15, width = 0.3) + 
+  coord_cartesian(ylim = c(0, 1)) + 
+  theme_bw() + 
+  labs(x="DC") + 
+  stat_compare_means(paired=TRUE, label.x = 1.35, label.y = 0.5)
+dc_plot
+```
+
+### Wilcoxon 
+
+```{r, echo=FALSE}
+
+wilcox.test(df_transform_one_dc$Proportion, df_transform_two_dc$Proportion, paired = TRUE, alternative = "two.sided", conf.int = TRUE, exact=FALSE)
+
+```
+
+### Boxplot with Paired Lines 
+
+```{r, echo=FALSE}
+
+ggplot(df_combined_dc, aes(x = Representation, y = Proportion)) +
+    geom_boxplot(aes(fill = Representation)) +
+        geom_point(aes(col = Representation), size = 0.1, stroke = 0, shape = 16) +
+    geom_line(aes(group = Index), alpha = 0.2, col = "grey") +
+  coord_cartesian(ylim = c(0, 1))  +
+  stat_compare_means(paired=TRUE, label.x = 1.35, label.y = 0.95) +
+    labs(title = paste(strategy, "Paired Parameter Study", sep=" "),
+        subtitle = paste("Distribution of ", transform_one, " & ", transform_two, " DC Outcomes. [Exp IDs: ", exp_id_transform_one, ", ", exp_id_transform_two, "]", sep="")) +
+  theme_minimal() +
+  scale_fill_brewer(palette="Blues") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12),    # Center title position and size
+    plot.subtitle = element_text(hjust = 0.5, size=10),            # Center subtitle
+    plot.caption = element_text(hjust = 0, face = "italic") # move caption to the left
+  ) +
+  rremove("legend")
+
+ggsave(path="plots", filename=paste("compare_transforms_", strategy_filename, "_", exp_id_transform_one, "_", exp_id_transform_two, "_DC_pairwise_boxplot_paired_lines-test.png", sep=""), width=8, height=6, dpi=300)
+
+```
+
+## DD pairwise (`r transform_one` ~ `r transform_two`)
+
+### Boxplot with Scatter points, Wilcoxon p-value annotation
+
+```{r, echo=FALSE}
+
+df_combined_dd <- data.frame(
+    Index = c(seq.int(100), seq.int(100)),
+    Representation = factor(c(rep(paste(transform_one), 100), rep(paste(transform_two), 100))),
+    Outcome = factor(c(rep("DD", 200))),
+    Proportion = c(df_transform_one_dd$Proportion, df_transform_two_dd$Proportion)
+)
+
+# re-level to change from default alphabetical ordering
+df_combined_dd$Representation <- factor(df_combined_dd$Representation, levels=c(paste(transform_one), paste(transform_two))) 
+
+dd_plot <- ggplot(df_combined_dd, aes(x=Representation, y=Proportion)) + 
+  geom_boxplot() + 
+  geom_jitter(alpha = 0.15, width = 0.3) + 
+  coord_cartesian(ylim = c(0, 1)) + 
+  theme_bw() + 
+  labs(x="DD") + 
+  stat_compare_means(paired=TRUE, label.x = 1.35, label.y = 0.5)
+dd_plot
+```
+
+### Wilcoxon 
+
+```{r, echo=FALSE}
+
+wilcox.test(df_transform_one_dd$Proportion, df_transform_two_dd$Proportion, paired = TRUE, alternative = "two.sided", conf.int = TRUE, exact=FALSE)
+
+```
+
+### Boxplot with Paired Lines 
+
+```{r, echo=FALSE}
+
+ggplot(df_combined_dd, aes(x = Representation, y = Proportion)) +
+    geom_boxplot(aes(fill = Representation)) +
+        geom_point(aes(col = Representation), size = 0.1, stroke = 0, shape = 16) +
+    geom_line(aes(group = Index), alpha = 0.2, col = "grey") +
+  coord_cartesian(ylim = c(0, 1))  +
+  stat_compare_means(paired=TRUE, label.x = 1.35, label.y = 0.95) +
+    labs(title = paste(strategy, "Paired Parameter Study", sep=" "),
+        subtitle = paste("Distribution of ", transform_one, " & ", transform_two, " DD Outcomes. [Exp IDs: ", exp_id_transform_one, ", ", exp_id_transform_two, "]", sep="")) +
+  theme_minimal() +
+  scale_fill_brewer(palette="Blues") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12),    # Center title position and size
+    plot.subtitle = element_text(hjust = 0.5, size=10),            # Center subtitle
+    plot.caption = element_text(hjust = 0, face = "italic") # move caption to the left
+  ) +
+  rremove("legend")
+
+ggsave(path="plots", filename=paste("compare_transforms_", strategy_filename, "_", exp_id_transform_one, "_", exp_id_transform_two, "_DD_pairwise_boxplot_paired_lines-test.png", sep=""), width=8, height=6, dpi=300)
+
+```

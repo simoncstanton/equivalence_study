@@ -1,0 +1,176 @@
+{
+	"paths" : {
+		"basepath_hpc" 				: ["kunanyi"],
+		"basepath_localhost"		: ["Desktop", "kunanyi"],
+		"basepath_hpc_scratch"		: ["scratch"],
+		"agent_model" 				: "agent_model",
+		"agent_model_gameforms" 	: ["agent_model", "gameforms"],
+		"agent_model_strategies"	: ["agent_model", "strategies"],
+		
+		"experiments" 				: ["results", "experiments"],
+		"exp_parameter_study"		: ["results", "experiments", "selfplay_parameter_study"], 
+		"exp_symmetric_selfplay"	: ["results", "experiments", "symmetric_selfplay"], 
+		"exp_asymmetric_selfplay"	: ["results", "experiments", "asymmetric_selfplay"], 
+		"exp_head_to_head"			: ["results", "experiments", "head_to_head"], 
+		"exp_round_robin"			: ["results", "experiments", "round_robin"], 
+		"exp_tournament"			: ["results", "experiments", "tournament"],
+		"exp_spacewalk"				: ["results", "experiments", "spacewalk"],
+		
+		"observations"	 			: ["results", "observations"],
+		"obs_parameter_study"		: ["results", "observations", "selfplay_parameter_study"],
+		"obs_symmetric_selfplay"	: ["results", "observations", "symmetric_selfplay"],
+		"obs_asymmetric_selfplay"	: ["results", "observations", "asymmetric_selfplay"],
+		"obs_head_to_head"			: ["results", "observations", "head_to_head"],
+		"obs_round_robin"			: ["results", "observations", "round_robin"],
+		"obs_tournament"			: ["results", "observations", "tournament"],
+		
+		"obs_exp"					: ["results", "obs_exp"],
+		"run_exp"					: "run_exp",
+		"run_obs"					: "run_obs",
+		"pbs_scripts"				: "pbs_scripts",
+		"config"					: "config",
+		"pbs_output_path"			: ["results", "obs_exp", "pbs_output"]
+	},
+	"exp_data_leaf_dirs" : {
+		"action_history"				: "history_actions",
+		"reward_history"				: "history_rewards",	
+		"map_outcome_history"			: "history_outcomes_map",
+		"cumulative_outcome_history"	: "history_outcomes_cumulative",
+		"agent_internal_state"			: "internal_state_agent",
+		"strategy_internal_state"		: "internal_state_strategy"
+	},
+	"exp" : {
+		"data_file_prefix"						: "exp_",
+		"sj_compressed_file_extension"			: ".tar.gz",
+		"history_file_compressed_extension"		: ".csv.gz",
+		"history_file_uncompressed_extension"	: ".csv"
+	},
+	"obs" : {
+		"data_file_prefix"		: "obs_",
+		"data_file_extension"	: ".csv",
+		"leaf_view"				: "view",
+		"leaf_data"				: "data"
+	},
+	"heartbeat" : {
+		"heartbeat_path"			: ["results", "obs_exp", "heartbeat"],
+		"heartbeat_scratch_path"	: ["obs_exp", "heartbeat"],
+		"exp_heartbeat_prefix"		: "exp_",
+		"obs_heartbeat_prefix"		: "obs_",
+		"heartbeat_extension"		: ".heartbeat"
+	},
+	"journal" : {
+		"journal_path"					: ["results", "obs_exp", "journal"],
+		"journal_scratch_path"			: ["obs_exp", "journal"],
+		"journal_sj_summary_path"		: "sj_summary",
+		"exp_journal_entry_prefix"		: "exp_",
+		"obs_journal_entry_prefix"		: "obs_",
+		"journal_entry_suffix"			: "_summary",
+		"journal_entry_extension"		: ".json"
+	},
+	"filecount_to_episode_divisors"	: {
+		"action_history"				: 2,
+		"cumulative_outcome_history"	: 4,
+		"cumulative_outcome_map"		: 4,
+		"reward_history"				: 2
+	},
+	"pbs_output_extensions"			: {
+		"error"						:	"ER",
+		"output"					:	"OU"
+	},
+	"view"				: {
+		"eo_prefix"									: "eo_",
+		"view_suffix"					: "",
+		"view_extension"				: ".html",
+		"ts_o"	: {
+			"mean_episode_distribution"		: "_ts_o_mean_episode_distribution"
+		},
+		"ep_o"	: {
+			"default"		: "_ep_o_"
+		},
+		"ts_r"	: {
+			"default"		: "_ts_r_"
+		}
+	},
+	"analysis"			: {
+		"eo_prefix"									: "eo_",
+		"ep_o"			: {
+			"ep_o"									: "_ep_o",
+			"leaf_data"								: "ep_o",
+			"leaf_view"								: "ep_o",
+			
+			"terminal_e_count"						: "_terminal_e_count",
+			"terminal_e_count_e_mean"				: "_terminal_e_count_e_mean",
+			
+			"terminal_e_distribution"				: "_terminal_e_distribution",
+			"terminal_e_distribution_e_mean"		: "_terminal_e_distribution_e_mean"
+			
+		},
+		"ts_o"			: {
+			"ts_o"									: "_ts_o",
+			"leaf_data"								: "ts_o",
+			"leaf_view"								: "ts_o",
+			
+			"terminal_o_count"						: "_terminal_o_count",
+			"o_accum_sum_e_sum"						: "_o_accum_sum_e_sum",
+			"o_accum_sum_e_sum_distribution"		: "_o_accum_sum_e_sum_distribution",
+
+			"o_accum_sum_e_mean"					: "_o_accum_sum_e_mean",
+			"o_accum_sum_e_mean_distribution"		: "_o_accum_sum_e_mean_distribution"
+			
+		},
+		"ep_r"			: {
+			"ep_r"									: "_ep_r",
+			"leaf_data"								: "ep_r",
+			"leaf_view"								: "ep_r",
+			
+			"terminal_sum_agent_0"					: "_terminal_sum_a0",
+			"terminal_sum_agent_1"					: "_terminal_sum_a1",
+			
+			"terminal_sum_a_mean"					: "_terminal_sum_a_mean",
+			"terminal_sum_a_mean_e_mean"			: "_terminal_sum_a_mean_e_mean",
+			
+			"terminal_sum_e_mean_agent_0"			: "_terminal_sum_e_mean_a0",
+			"terminal_sum_e_mean_agent_1"			: "_terminal_sum_e_mean_a1",
+			
+			"terminal_sum_e_mean_a_mean"			: "_terminal_sum_e_mean_a_mean"
+			
+		},
+		"ts_r"			: {
+			"ts_r"									: "_ts_r",
+			"leaf_data"								: "ts_r",
+			"leaf_view"								: "ts_r",
+			
+			"acumm_sum_agent_0"						: "_acumm_sum_a0",
+			"acumm_sum_agent_1"						: "_acumm_sum_a1",
+			
+			"acumm_sum_a_mean"						: "_acumm_sum_a_mean",
+			
+			"acumm_sum_e_mean_agent_0"				: "_acumm_sum_e_mean_a0",
+			"acumm_sum_e_mean_agent_1"				: "_acumm_sum_e_mean_a1",
+			
+			"acumm_sum_e_mean_a_mean"				: "_acumm_sum_e_mean_a_mean",
+			
+			"timestep_mean_agent_0"					: "_timestep_mean_a0",
+			"timestep_mean_agent_1"					: "_timestep_mean_a1",
+			
+			"timestep_mean_a_mean"					: "_timestep_mean_a_mean",
+			"timestep_mean_a_mean_e_mean"			: "_timestep_mean_a_mean_e_mean",
+			
+			"timestep_mean_e_mean_agent_0"			: "_timestep_mean_e_mean_a0",
+			"timestep_mean_e_mean_agent_1"			: "_timestep_mean_e_mean_a1",
+			
+			"timestep_mean_e_mean_a_mean"			: "_timestep_mean_e_mean_a_mean"
+			
+			
+		}
+		
+	},
+	"report"			: {
+		"obs_summary"		: {
+			"data_file_prefix"		: "obs_summary_",
+			"report_suffix"			: "_report",
+			"report_extension"		: ".pdf"
+		}
+	}
+	
+}
