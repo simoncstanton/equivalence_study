@@ -4,7 +4,11 @@ Files in those locations for running alternative experiment types (e.g., tournam
 __USER__ and __USER_EMAIL__ system identifiers have been de-identified. .Rmd file maintains author.
 
 ## Visualisation of a behavioural profile as a faceted 3D Surface Map
-![3D Surface Map of Q-Learning game outcomes](https://raw.githubusercontent.com/simoncstanton/equivalence_study/6149b5632cd9ed884db6a0294d593aeb9967f71b/docs/exp_id_127288_q-learning-pd-scalar_selfplay_parameter_study.png?token=AUEDDAISHAT23ANNCKQKX43BD3NTM)
+![3D Surface Map of Q-Learning game outcomes](https://github.com/simoncstanton/equivalence_study/blob/main/docs/exp_id_127288_q-learning-pd-scalar_selfplay_parameter_study.png?raw=true)
+
+![Boxplot equivalence Q-Learning - Wilcoxon](https://github.com/simoncstanton/equivalence_study/blob/main/docs/compare_transforms_qlearning_127288_132060_facet_boxplot_paired_lines.png?raw=true)
+
+![Boxplot equivalence Q-Learning](https://github.com/simoncstanton/equivalence_study/blob/main/docs/compare_transforms_qlearning_127288_132060_grouped_boxplot.png?raw=trueE)
 
 # agent_model_hpc
 Agent Model for R&amp;G topology on HPC
