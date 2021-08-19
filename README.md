@@ -6,8 +6,10 @@ __USER__ and __USER_EMAIL__ system identifiers have been de-identified. .Rmd fil
 ## Visualisation of a behavioural profile as a faceted 3D Surface Map
 ![3D Surface Map of Q-Learning game outcomes](https://github.com/simoncstanton/equivalence_study/blob/main/docs/exp_id_127288_q-learning-pd-scalar_selfplay_parameter_study.png?raw=true)
 
+## Visualisation of comparison of 2 behavioural profiles as boxplot of distribution of game outcomes with Wilcoxon
 ![Boxplot equivalence Q-Learning - Wilcoxon](https://github.com/simoncstanton/equivalence_study/blob/main/docs/compare_transforms_qlearning_127288_132060_facet_boxplot_paired_lines.png?raw=true)
 
+## Visualisation of comparison of 2 behavioural profiles as boxplot of distribution of game outcomes
 ![Boxplot equivalence Q-Learning](https://github.com/simoncstanton/equivalence_study/blob/main/docs/compare_transforms_qlearning_127288_132060_grouped_boxplot.png?raw=trueE)
 
 # agent_model_hpc
