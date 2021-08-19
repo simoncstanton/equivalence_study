@@ -10,13 +10,10 @@ Agent Model for R&amp;G topology on HPC
 - Paths and notification handles are environment and user specific (remember to clean forks)
 
 .gitignore
-- exclude R scripts and R-data output dirs. 
-  - TODO: include individual .rmd files per-experiment type here.
 - exclude /results/ 
   - takes a lot of space and changes
   - to run model, requires (some-maybe all) sub-directories in results/ to exist (see /agent_model_hpc/config/agent_model_hpc_config.json)
-- exclude /notes/
-  - mostly scratch files
+
 
 Python dependencies
 - agent_model/, run_exp/
