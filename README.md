@@ -1,6 +1,6 @@
 # Equivalence Study 2021
 
-This codebase is for a paper on behavioural equivalence in learnig algorithms (submitted to conference, will update details if accepted)
+This codebase is for a paper on behavioural equivalence in learning algorithms (submitted, will update details if accepted)
 
 ## Overview
 The equivalence study relies on selfplay_parameter_study experiment type files in run_exp/ and run_obs/
