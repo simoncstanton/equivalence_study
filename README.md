@@ -3,7 +3,7 @@
 This codebase is for a paper on behavioural equivalence in learning algorithms (submitted, will update details if accepted)
 
 ## Overview
-The equivalence study relies on selfplay_parameter_study experiment type files in run_exp/ and run_obs/
+The equivalence study relies on selfplay_parameter_study experiment type files in run_exp/ and run_obs/.
 Files in those locations for running alternative experiment types (e.g., tournament, selfplay) have been removed.
 __USER__ and __USER_EMAIL__ system identifiers have been de-identified. .Rmd file maintains author.
 
@@ -30,5 +30,6 @@ Agent Model for R&amp;G topology on HPC
 Python dependencies
 - agent_model/, run_exp/
   - numpy
-  - natsorted
-- run_obs/ requires* plotly, pandas, matplotlib, seaborn (*mostly)
+- run_obs/ 
+  - requires natsort
+  - individual files may require plotly, pandas, matplotlib, seaborn
