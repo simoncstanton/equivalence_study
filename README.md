@@ -1,5 +1,10 @@
 # Equivalence Study 2021
+------------------------
+[Edit 28/09/2021]
+- Paper was submitted and accepted and is approaching camera-ready. 
+- Will add a new release to this repository as I found a typo/error in a variable name (s/self.prev_state/self.state/) in one algorithm's action-selection mechanism. It doesn't appear to really change the algorithm's behaviour much in respect of the hypothesis presented in the paper (non-variance) since it (the algorithm) is processing as before but from one step back in time. This is debateable sure. As is the literature, it seems. But anyway, the low number of possible states in these game environments makes for long cycles. The affected algorithm still displays a ~similar level of variance across the four gameform representations as before. The experiments have been re-run and the conclusions reached in the paper remain. More detail will be here as Supplementary Detail. 
 
+[Edit 20/08/2021 and older]
 This codebase is for a paper on behavioural equivalence in learning algorithms (submitted, will update details if accepted)
 
 ## Overview
