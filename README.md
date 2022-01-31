@@ -1,5 +1,15 @@
 # Equivalence Study 2021
 ------------------------
+Code and supplementary material for the paper **Representation-Induced Algorithmic Bias**
+Accepted to AJCAI21 as a regular paper (ajcai2021.net).
+Was delayed by several months (covid) so 2021 conference is being held in Febraury 2022.
+
+
+
+[Edit 01/02/2022]
+Added pre-print of paper, supplementary material, poster, and video presentation to docs/
+Conference is tmrw so expect the proceedings to be published sometime soon. Will update with official link when that happens.
+
 [Edit 04/10/2021]
 - Created new release with modified line in one algorithm as per edit below
 - Added _RepresentationInducedAlgorithmicBias-Supplementary-Material-A.pdf_
@@ -9,6 +19,7 @@
 - Paper was submitted and accepted and is approaching camera-ready. 
 More detail will be posted here as _RepresentationInducedAlgorithmicBias-Supplementary-Material-A.pdf_. 
 - Will add a new release to this repository as I found a typo/error in a variable name (s/self.prev_state/self.state/) in one algorithm's action-selection mechanism. It doesn't appear to change the algorithm's behaviour in respect of the hypothesis presented in the paper (non-variance) since it (the algorithm) is processing as before, but from one step back in time. This is debateable sure, as is the literature maybe. Regardless, the low number of possible states in these game environments makes for long cycles. The affected algorithm still displays a ~similar level of variance across the four gameform representations as before. The experiments have been re-run, tables updated, and _the conclusions reached in the paper remain_. 
+- Edited the appropriate file in the release codebase and committed the change 01/02/2022
 
 [Edit 20/08/2021 and older]
 This codebase is for a paper on behavioural equivalence in learning algorithms (submitted, will update details if accepted)

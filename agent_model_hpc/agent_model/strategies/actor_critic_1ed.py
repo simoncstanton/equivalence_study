@@ -160,9 +160,14 @@ class Actor_critic_1ed(Strategy):
                 self.smv[self.prev_state][0] = numerator_0 / denominator
                 self.smv[self.prev_state][1] = numerator_1 / denominator
                 
-
+            # note (020921) was previous state not current state.
+            #   previous code: if rnd < self.smv[self.prev_state][0]:
+            #   so, code was drawing off smv at t. should/appears to be t.
+            #   so, code calculates smv at t+1 (self.state not self.prev_state) and _then_ draws action from the smv. i.e., after it has processed incoming reward. 
+            #
+            #   added for release 2 of equivalence-study on 01/02/2022 
             rnd = random.random()
-            if rnd < self.smv[self.prev_state][0]:
+            if rnd < self.smv[self.state][0]:
                 action = 0
             else:
                 action = 1
