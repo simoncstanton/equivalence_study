@@ -2,7 +2,7 @@
 ------------------------
 Code and supplementary material for the paper **Representation-Induced Algorithmic Bias**
 Accepted to AJCAI21 as a regular paper (ajcai2021.net).
-Was delayed by several months (covid) so 2021 conference is being held in Febraury 2022.
+Conference was delayed by several months (covid) so 2021 conference is being held in February 2022.
 
 
 
@@ -10,11 +10,11 @@ Was delayed by several months (covid) so 2021 conference is being held in Febrau
 Added pre-print of paper, supplementary material, poster, and video presentation to docs/
 Conference is tmrw so expect the proceedings to be published sometime soon. Will update with official link when that happens.
 - previous version of R&G model had three typos (games g431, g256, g141) where one digit in each matrix was wrong. this part of the model was not being used in this study so this work is not affected. Correction has been made to the file.
+- tidied up naming/release details as held back pushing commits since Oct and some names changed.
 
 [Edit 04/10/2021]
 - Created new release with modified line in one algorithm as per edit below
-- Added _RepresentationInducedAlgorithmicBias-Supplementary-Material-A.pdf_
-
+- Added docs/Stanton-Dermoudy-Ollington_Representation-Induced-Algorithmic-Bias_Supplementary-Material-A_041021.pdf
 
 [Edit 28/09/2021]
 - Paper was submitted and accepted and is approaching camera-ready. 
