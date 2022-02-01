@@ -9,6 +9,7 @@ Was delayed by several months (covid) so 2021 conference is being held in Febrau
 [Edit 01/02/2022]
 Added pre-print of paper, supplementary material, poster, and video presentation to docs/
 Conference is tmrw so expect the proceedings to be published sometime soon. Will update with official link when that happens.
+- previous version of R&G model had three typos (games g431, g256, g141) where one digit in each matrix was wrong. this part of the model was not being used in this study so this work is not affected. Correction has been made to the file.
 
 [Edit 04/10/2021]
 - Created new release with modified line in one algorithm as per edit below
